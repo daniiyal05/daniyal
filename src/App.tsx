@@ -2,7 +2,7 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
  */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ShaderBackground } from './components/ShaderBackground';
 import { ArrowUpRight, Hexagon, Mail, MapPin, Send } from 'lucide-react';
 
@@ -64,6 +64,68 @@ function useScrollReveal() {
       revealObserver.disconnect();
     };
   }, []);
+}
+
+function ContactForm() {
+  const [result, setResult] = useState("");
+
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setResult("Sending...");
+    
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    
+    // Add the Web3Forms access key
+    formData.append("access_key", "9412293c-5c00-49ad-bc1e-1e77cda878e0");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setResult("Form Submitted Successfully!");
+        form.reset();
+      } else {
+        console.error("Error", data);
+        setResult(data.message);
+      }
+    } catch (error) {
+      console.error("Error", error);
+      setResult("An error occurred while submitting the form.");
+    }
+  };
+
+  return (
+    <form className="space-y-6" onSubmit={onSubmit}>
+      <div>
+        <label className="block font-label-caps text-label-caps text-slate-muted mb-2" htmlFor="name">Full Name</label>
+        <input className="w-full bg-transparent border-0 border-b border-glass-border px-0 py-2 focus:ring-0 focus:border-primary-container text-primary font-body-md transition-colors hover-target" id="name" name="name" type="text" required />
+      </div>
+      <div>
+        <label className="block font-label-caps text-label-caps text-slate-muted mb-2" htmlFor="email">Email Address</label>
+        <input className="w-full bg-transparent border-0 border-b border-glass-border px-0 py-2 focus:ring-0 focus:border-primary-container text-primary font-body-md transition-colors hover-target" id="email" name="email" type="email" required />
+      </div>
+      <div>
+        <label className="block font-label-caps text-label-caps text-slate-muted mb-2" htmlFor="message">Project Brief</label>
+        <textarea className="w-full bg-transparent border-0 border-b border-glass-border px-0 py-2 focus:ring-0 focus:border-primary-container text-primary font-body-md resize-none transition-colors hover-target" id="message" name="message" rows={4} required></textarea>
+      </div>
+      
+      {/* Honeypot field to prevent spam */}
+      <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+      
+      <button className="w-full bg-primary-container text-obsidian-deep py-4 font-label-caps text-label-caps uppercase rounded-DEFAULT hover:bg-primary-fixed transition-colors hover-target flex items-center justify-center gap-2 mt-8" type="submit">
+        Get Quote Now
+        <Send size={16} />
+      </button>
+      
+      {result && <div className="text-center mt-4 font-body-md text-primary-container">{result}</div>}
+    </form>
+  );
 }
 
 export default function App() {
@@ -216,24 +278,7 @@ export default function App() {
             <p className="font-body-lg text-body-lg text-on-surface-variant mb-8">Ready to elevate your digital presence? Let's discuss architecture, timelines, and deliverables.</p>
           </div>
           <div className="glass-card bg-obsidian-surface p-8 rounded-xl reveal" style={{ transitionDelay: '0.2s' }}>
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-              <div>
-                <label className="block font-label-caps text-label-caps text-slate-muted mb-2" htmlFor="name">Full Name</label>
-                <input className="w-full bg-transparent border-0 border-b border-glass-border px-0 py-2 focus:ring-0 focus:border-primary-container text-primary font-body-md transition-colors hover-target" id="name" type="text" />
-              </div>
-              <div>
-                <label className="block font-label-caps text-label-caps text-slate-muted mb-2" htmlFor="email">Email Address</label>
-                <input className="w-full bg-transparent border-0 border-b border-glass-border px-0 py-2 focus:ring-0 focus:border-primary-container text-primary font-body-md transition-colors hover-target" id="email" type="email" />
-              </div>
-              <div>
-                <label className="block font-label-caps text-label-caps text-slate-muted mb-2" htmlFor="message">Project Brief</label>
-                <textarea className="w-full bg-transparent border-0 border-b border-glass-border px-0 py-2 focus:ring-0 focus:border-primary-container text-primary font-body-md resize-none transition-colors hover-target" id="message" rows={4}></textarea>
-              </div>
-              <button className="w-full bg-primary-container text-obsidian-deep py-4 font-label-caps text-label-caps uppercase rounded-DEFAULT hover:bg-primary-fixed transition-colors hover-target flex items-center justify-center gap-2 mt-8" type="submit">
-                Get Quote Now
-                <Send size={16} />
-              </button>
-            </form>
+            <ContactForm />
           </div>
         </div>
       </section>
