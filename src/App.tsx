@@ -4,7 +4,7 @@
  */
 import { useEffect, useState } from 'react';
 import { ShaderBackground } from './components/ShaderBackground';
-import { ArrowUpRight, Hexagon, Mail, MapPin, Send } from 'lucide-react';
+import { ArrowUpRight, Hexagon, Send, Menu, X } from 'lucide-react';
 
 function CustomCursor() {
   useEffect(() => {
@@ -101,92 +101,122 @@ function ContactForm() {
   };
 
   return (
-    <form className="space-y-6" onSubmit={onSubmit}>
+    <form className="space-y-5 relative z-10" onSubmit={onSubmit}>
       <div>
-        <label className="block font-label-caps text-label-caps text-slate-muted mb-2" htmlFor="name">Full Name</label>
-        <input className="w-full bg-transparent border-0 border-b border-glass-border px-0 py-2 focus:ring-0 focus:border-primary-container text-primary font-body-md transition-colors hover-target" id="name" name="name" type="text" required />
+        <label className="block font-label-caps text-xs text-slate-muted mb-2 tracking-wider uppercase" htmlFor="name">Full Name</label>
+        <input className="w-full bg-surface-container-low border border-glass-border px-4 py-3 focus:ring-1 focus:ring-primary-container focus:border-primary-container text-primary font-body-md transition-colors hover-target rounded-lg outline-none placeholder:text-slate-muted/40" id="name" name="name" type="text" placeholder="John Doe" required />
       </div>
       <div>
-        <label className="block font-label-caps text-label-caps text-slate-muted mb-2" htmlFor="email">Email Address</label>
-        <input className="w-full bg-transparent border-0 border-b border-glass-border px-0 py-2 focus:ring-0 focus:border-primary-container text-primary font-body-md transition-colors hover-target" id="email" name="email" type="email" required />
+        <label className="block font-label-caps text-xs text-slate-muted mb-2 tracking-wider uppercase" htmlFor="email">Email Address</label>
+        <input className="w-full bg-surface-container-low border border-glass-border px-4 py-3 focus:ring-1 focus:ring-primary-container focus:border-primary-container text-primary font-body-md transition-colors hover-target rounded-lg outline-none placeholder:text-slate-muted/40" id="email" name="email" type="email" placeholder="john@example.com" required />
       </div>
       <div>
-        <label className="block font-label-caps text-label-caps text-slate-muted mb-2" htmlFor="message">Project Brief</label>
-        <textarea className="w-full bg-transparent border-0 border-b border-glass-border px-0 py-2 focus:ring-0 focus:border-primary-container text-primary font-body-md resize-none transition-colors hover-target" id="message" name="message" rows={4} required></textarea>
+        <label className="block font-label-caps text-xs text-slate-muted mb-2 tracking-wider uppercase" htmlFor="message">Project Brief</label>
+        <textarea className="w-full bg-surface-container-low border border-glass-border px-4 py-3 focus:ring-1 focus:ring-primary-container focus:border-primary-container text-primary font-body-md resize-none transition-colors hover-target rounded-lg outline-none placeholder:text-slate-muted/40" id="message" name="message" rows={4} placeholder="Tell me about your project..." required></textarea>
       </div>
       
       {/* Honeypot field to prevent spam */}
       <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
       
-      <button className="w-full bg-primary-container text-obsidian-deep py-4 font-label-caps text-label-caps uppercase rounded-DEFAULT hover:bg-primary-fixed transition-colors hover-target flex items-center justify-center gap-2 mt-8" type="submit">
+      <button className="w-full bg-primary-container text-obsidian-deep py-4 font-label-caps text-sm font-bold uppercase rounded-lg hover:bg-primary-fixed hover:scale-[1.02] active:scale-[0.98] transition-all hover-target flex items-center justify-center gap-2 mt-6 shadow-lg shadow-primary-container/10" type="submit">
         Get Quote Now
-        <Send size={16} />
+        <Send size={18} />
       </button>
       
-      {result && <div className="text-center mt-4 font-body-md text-primary-container">{result}</div>}
+      {result && <div className="text-center mt-4 font-body-md text-sm text-primary-container bg-primary-container/10 py-2.5 rounded-lg border border-primary-container/20">{result}</div>}
     </form>
   );
 }
 
 export default function App() {
   useScrollReveal();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <>
       <CustomCursor />
       
       {/* TopNavBar */}
-      <nav className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-glass-border">
-        <div className="flex justify-between items-center px-gutter py-unit w-full max-w-container-max mx-auto">
-          <a className="font-display-xl text-headline-md tracking-tighter text-primary hover-target" href="#">.Daniyal</a>
-          <div className="hidden md:flex items-center gap-element-gap">
-            <a className="text-on-surface-variant font-medium font-body-md text-body-md hover:text-primary transition-colors duration-300 hover-target" href="#work">Work</a>
-            <a className="text-on-surface-variant font-medium font-body-md text-body-md hover:text-primary transition-colors duration-300 hover-target" href="#stack">Stack</a>
-            <a className="text-on-surface-variant font-medium font-body-md text-body-md hover:text-primary transition-colors duration-300 hover-target" href="#contact">Contact</a>
+      <nav className="fixed top-0 w-full z-50 bg-obsidian-deep/85 backdrop-blur-xl border-b border-glass-border shadow-sm">
+        <div className="flex justify-between items-center px-6 md:px-gutter py-4 w-full max-w-container-max mx-auto">
+          <a className="font-display-xl text-2xl md:text-3xl font-bold tracking-tighter text-primary hover-target" href="#">.Daniyal</a>
+          <div className="hidden md:flex items-center gap-8">
+            <a className="text-on-surface-variant font-medium font-body-md text-sm uppercase tracking-wider hover:text-primary transition-colors duration-300 hover-target" href="#work">Work</a>
+            <a className="text-on-surface-variant font-medium font-body-md text-sm uppercase tracking-wider hover:text-primary transition-colors duration-300 hover-target" href="#stack">Stack</a>
+            <a className="text-on-surface-variant font-medium font-body-md text-sm uppercase tracking-wider hover:text-primary transition-colors duration-300 hover-target" href="#contact">Contact</a>
           </div>
-          <a className="bg-primary-container text-obsidian-deep px-6 py-3 font-label-caps text-label-caps uppercase rounded-DEFAULT hover:bg-primary-fixed transition-colors hover-target flex items-center gap-2" href="#contact">
+          <a className="hidden md:flex bg-primary-container text-obsidian-deep px-5 py-2.5 font-label-caps text-xs font-bold uppercase rounded-lg hover:bg-primary-fixed hover:-translate-y-0.5 active:translate-y-0 transition-all hover-target items-center gap-2" href="#contact">
             Hire Me
-            <ArrowUpRight size={16} />
+            <ArrowUpRight size={16} strokeWidth={2.5} />
           </a>
+          <button 
+            className="md:hidden text-primary p-2 focus:outline-none hover-target" 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+        
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 w-full bg-obsidian-deep/95 backdrop-blur-xl border-b border-glass-border py-6 px-6 flex flex-col gap-6 shadow-2xl">
+            <a className="text-on-surface-variant font-medium font-body-md text-sm uppercase tracking-wider hover:text-primary transition-colors duration-300" href="#work" onClick={() => setIsMobileMenuOpen(false)}>Work</a>
+            <a className="text-on-surface-variant font-medium font-body-md text-sm uppercase tracking-wider hover:text-primary transition-colors duration-300" href="#stack" onClick={() => setIsMobileMenuOpen(false)}>Stack</a>
+            <a className="text-on-surface-variant font-medium font-body-md text-sm uppercase tracking-wider hover:text-primary transition-colors duration-300" href="#contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
+            <a className="bg-primary-container text-obsidian-deep px-6 py-4 font-label-caps text-sm font-bold uppercase rounded-lg text-center hover:bg-primary-fixed transition-colors flex justify-center items-center gap-2 mt-4" href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+              Hire Me
+              <ArrowUpRight size={18} strokeWidth={2.5} />
+            </a>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
-      <header className="relative min-h-screen flex items-center pt-section-gap-md pb-section-gap-lg">
+      <header className="relative min-h-[100svh] flex items-center pt-24 pb-16 md:pt-section-gap-md md:pb-section-gap-lg overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-40">
           <ShaderBackground />
         </div>
-        <div className="relative z-10 w-full max-w-container-max mx-auto px-gutter grid grid-cols-1 md:grid-cols-12 gap-gutter">
-          <div className="md:col-span-8 flex flex-col gap-element-gap reveal">
-            <p className="font-label-caps text-label-caps text-primary-container tracking-[0.2em] uppercase">Digital Craftsman</p>
-            <h1 className="font-display-xl text-display-xl md:text-display-xl text-primary leading-none">Engineering Excellence through Precision &amp; Design.</h1>
-            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mt-4">
+        <div className="relative z-10 w-full max-w-container-max mx-auto px-6 md:px-gutter grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-gutter">
+          <div className="lg:col-span-8 flex flex-col gap-5 md:gap-6 reveal">
+            <div className="inline-flex items-center gap-3">
+              <span className="w-8 md:w-10 h-[1px] bg-primary-container"></span>
+              <p className="font-label-caps text-xs md:text-sm text-primary-container tracking-[0.2em] uppercase">Digital Craftsman</p>
+            </div>
+            <h1 className="font-display-xl text-4xl sm:text-5xl md:text-6xl lg:text-[72px] text-primary leading-[1.15] md:leading-[1.1] tracking-tight">
+              Engineering Excellence through Precision &amp; Design.
+            </h1>
+            <p className="font-body-lg text-base sm:text-lg md:text-xl text-on-surface-variant max-w-2xl mt-2 leading-relaxed">
               Architecting robust, scalable, and visually arresting digital experiences for forward-thinking enterprises.
             </p>
-            <div className="mt-8 flex gap-4">
-              <a className="bg-primary-container text-obsidian-deep px-8 py-4 font-label-caps text-label-caps uppercase rounded-DEFAULT hover:bg-primary-fixed transition-colors hover-target inline-flex items-center gap-2" href="#work">
+            <div className="mt-6 md:mt-8 flex flex-col sm:flex-row gap-4">
+              <a className="bg-primary-container text-obsidian-deep px-8 py-4 font-label-caps text-sm uppercase font-bold rounded-lg hover:bg-primary-fixed hover:scale-105 active:scale-95 transition-all hover-target inline-flex items-center justify-center gap-2 shadow-lg shadow-primary-container/20" href="#work">
                 View Projects
+              </a>
+              <a className="bg-transparent border border-glass-border text-primary px-8 py-4 font-label-caps text-sm uppercase font-bold rounded-lg hover:bg-white/5 hover:border-primary-container/50 active:scale-95 transition-all hover-target inline-flex items-center justify-center gap-2" href="#contact">
+                Contact Me
               </a>
             </div>
           </div>
-          <div className="md:col-span-4 hidden md:flex items-center justify-center relative reveal" style={{ transitionDelay: '0.2s' }}>
-            <div className="w-64 h-64 border border-glass-border rounded-full flex items-center justify-center relative before:absolute before:inset-[-20px] before:border before:border-glass-border/50 before:rounded-full after:absolute after:inset-[-40px] after:border after:border-glass-border/20 after:rounded-full">
-              <Hexagon size={64} className="text-primary-container opacity-80" strokeWidth={1} />
+          <div className="lg:col-span-4 hidden lg:flex items-center justify-center relative reveal" style={{ transitionDelay: '0.2s' }}>
+            <div className="w-64 h-64 border border-glass-border rounded-full flex items-center justify-center relative before:absolute before:inset-[-20px] before:border before:border-glass-border/50 before:rounded-full after:absolute after:inset-[-40px] after:border after:border-glass-border/20 after:rounded-full animate-[spin_40s_linear_infinite]">
+              <div className="animate-[spin_20s_linear_infinite_reverse]">
+                <Hexagon size={80} className="text-primary-container opacity-90 drop-shadow-[0_0_15px_rgba(0,255,194,0.3)]" strokeWidth={1} />
+              </div>
             </div>
           </div>
         </div>
       </header>
 
       {/* Work Section */}
-      <section className="py-section-gap-lg relative z-10" id="work">
-        <div className="w-full max-w-container-max mx-auto px-gutter">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 reveal">
-            <div>
-              <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">Selected Works</h2>
-              <p className="font-body-md text-body-md text-on-surface-variant mt-2">Enterprise-grade solutions engineered for scale.</p>
+      <section className="py-20 md:py-32 relative z-10" id="work">
+        <div className="w-full max-w-container-max mx-auto px-6 md:px-gutter">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-16 reveal">
+            <div className="max-w-2xl">
+              <h2 className="font-headline-lg text-3xl md:text-4xl lg:text-5xl text-primary font-bold mb-3 md:mb-4">Selected Works</h2>
+              <p className="font-body-md text-base md:text-lg text-on-surface-variant">Enterprise-grade solutions engineered for scale and aesthetic perfection.</p>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {/* Project 1 */}
             <div className="glass-card bg-obsidian-surface rounded-xl overflow-hidden group transition-all duration-500 reveal hover:-translate-y-2 hover-target">
               <div className="h-64 bg-surface-container-high relative overflow-hidden">
@@ -245,13 +275,14 @@ export default function App() {
       </section>
 
       {/* Tech Stack Section */}
-      <section className="py-section-gap-lg relative z-10 bg-surface-container-lowest border-y border-glass-border" id="stack">
-        <div className="w-full max-w-container-max mx-auto px-gutter">
-          <div className="text-center mb-16 reveal">
-            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">Technology Arsenal</h2>
-            <p className="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl mx-auto">Mastery over modern tooling to deliver uncompromising quality.</p>
+      <section className="py-20 md:py-32 relative z-10 bg-surface-container-lowest border-y border-glass-border overflow-hidden" id="stack">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary-container/5 via-background to-background pointer-events-none"></div>
+        <div className="w-full max-w-container-max mx-auto px-6 md:px-gutter relative z-10">
+          <div className="text-center mb-10 md:mb-16 reveal">
+            <h2 className="font-headline-lg text-3xl md:text-4xl lg:text-5xl text-primary font-bold mb-3 md:mb-4">Technology Arsenal</h2>
+            <p className="font-body-md text-base md:text-lg text-on-surface-variant max-w-2xl mx-auto">Mastery over modern tooling to deliver uncompromising quality and performance.</p>
           </div>
-          <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto reveal">
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4 max-w-3xl mx-auto reveal">
             {['HTML', 'CSS', 'JAVASCRIPT', 'REACT', 'NEXTJS', 'TAILWIND CSS', 'SUPABASE', 'FIGMA'].map((tech, i) => {
               let borderClass = 'border-primary/20 hover:border-primary-container hover:bg-primary-container/10 hover:text-primary-container';
               if (['NEXTJS', 'TAILWIND CSS', 'SUPABASE'].includes(tech)) {
@@ -261,7 +292,7 @@ export default function App() {
               }
               
               return (
-                <div key={tech} className={`px-6 py-3 font-label-caps text-label-caps bg-obsidian-surface border rounded-full transition-all cursor-pointer hover-target ${borderClass}`}>
+                <div key={tech} className={`px-5 py-2.5 md:px-6 md:py-3 font-label-caps text-[10px] md:text-xs font-bold uppercase bg-obsidian-surface border rounded-full transition-all cursor-pointer hover-target hover:-translate-y-1 shadow-sm ${borderClass}`}>
                   {tech}
                 </div>
               );
@@ -271,23 +302,29 @@ export default function App() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-section-gap-lg relative z-10" id="contact">
-        <div className="w-full max-w-container-max mx-auto px-gutter grid grid-cols-1 md:grid-cols-2 gap-gutter">
+      <section className="py-20 md:py-32 relative z-10" id="contact">
+        <div className="w-full max-w-container-max mx-auto px-6 md:px-gutter grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
           <div className="reveal">
-            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-4">Initiate Dialogue</h2>
-            <p className="font-body-lg text-body-lg text-on-surface-variant mb-8">Ready to elevate your digital presence? Let's discuss architecture, timelines, and deliverables.</p>
+            <h2 className="font-headline-lg text-3xl md:text-4xl lg:text-5xl text-primary font-bold mb-4 md:mb-6">Initiate Dialogue</h2>
+            <p className="font-body-lg text-base md:text-lg text-on-surface-variant mb-6 md:mb-8 leading-relaxed max-w-lg">Ready to elevate your digital presence? Let's discuss architecture, timelines, and deliverables to bring your vision to life.</p>
+            <div className="flex gap-4 items-center">
+               <div className="h-[1px] bg-glass-border flex-1"></div>
+               <span className="text-primary-container font-label-caps text-[10px] sm:text-xs uppercase tracking-widest font-bold">Available for new opportunities</span>
+               <div className="h-[1px] bg-glass-border flex-1"></div>
+            </div>
           </div>
-          <div className="glass-card bg-obsidian-surface p-8 rounded-xl reveal" style={{ transitionDelay: '0.2s' }}>
+          <div className="glass-card bg-obsidian-surface p-6 md:p-10 rounded-2xl reveal shadow-2xl relative" style={{ transitionDelay: '0.2s' }}>
+             <div className="absolute -top-6 -right-6 w-32 h-32 bg-primary-container/10 blur-3xl rounded-full pointer-events-none"></div>
             <ContactForm />
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="w-full py-section-gap-md bg-obsidian-deep border-t border-glass-border relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-center px-gutter w-full max-w-container-max mx-auto gap-8">
-          <div className="font-display-xl text-body-lg text-primary">.Daniyal</div>
-          <div className="font-label-caps text-label-caps text-slate-muted">© 2024 .Daniyal. Engineered for Excellence.</div>
+      <footer className="w-full py-12 md:py-16 bg-obsidian-deep border-t border-glass-border relative z-10">
+        <div className="flex flex-col md:flex-row justify-between items-center px-6 md:px-gutter w-full max-w-container-max mx-auto gap-6">
+          <div className="font-display-xl text-xl font-bold tracking-tighter text-primary">.Daniyal</div>
+          <div className="font-label-caps text-xs text-slate-muted text-center md:text-left">© 2024 .Daniyal. Engineered for Excellence.</div>
         </div>
       </footer>
     </>
